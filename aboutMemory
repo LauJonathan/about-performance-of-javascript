@@ -1,0 +1,18 @@
+stack and heap
+stack
+  simple data type(string,number,boolean,null,undefined)
+  reference pointer
+heap 
+  complex type(extensible e.g. Function,Object,Array)
+  
+stack 
+  advantage:
+    方便简单类型、指针访问、快
+  disadvantage:
+    扩展性不灵活，堆放栈也影响效率
+heap
+  advantage:
+    动态、可扩展性灵活
+  disadvantage:
+    存放简单类型时效率慢
+    
