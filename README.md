@@ -1,4 +1,4 @@
-do some works of performance views use javascript
+do some works of performance views with javascript
 
 2016-5-30 my github first file --- caculateFunctionTime.js 
 
