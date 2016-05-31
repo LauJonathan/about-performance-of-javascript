@@ -1,6 +1,7 @@
 //closure 
 //以函数为作用域划分，函数中定义var变量或对象return后将被回收 
 //外部函数中变量在内部函数一段开辟作用域被引用而未被释放，没有引用函数返回时才会释放。赋值null只是等待回收，不是一定回收
+//usually,closure existed(Event监听器、setTimeout计时器)
 //eg: 1. return function 2. outer reference 
 1.
 function a(){
