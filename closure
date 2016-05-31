@@ -72,3 +72,10 @@ obj.exec1(); //2
 obj.exec2(); //3
 obj.exec2(); //4
 //多个嵌套函数间共享同一个作用域链，变量共享
+
+3.立即函数
+(function(){
+  var adc = 50;
+  console.log(++adc);
+})();
+//可防止全局变量污染
