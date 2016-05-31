@@ -1,0 +1,74 @@
+//closure 
+//以函数为作用域划分，函数中定义var变量或对象return后将被回收 
+//外部函数中变量在内部函数一段开辟作用域被引用而未被释放，没有引用函数返回时才会释放。赋值null只是等待回收，不是一定回收
+//eg: 1. return function 2. outer reference 
+1.
+function a(){
+ var val = 0;
+ return function(){
+  ++val;
+  console.log(val);
+ };
+}
+var c = a();
+c(); //1
+c(); //2
+
+/*
+* 变形
+*/
+function a(){
+  var val = 0;
+  return {
+    one : function(){
+      ++val;
+      console.log(val);
+    },
+    two : function(){
+      ++val;
+      console.log(val);
+    }
+  };
+}
+var c = a();
+c.one(); //1
+c.one(); //2
+c.two(); //3
+c.two(); //4
+//多个嵌套函数间共享同一个作用域链，变量共享
+var d = a();  //新赋值，d和c是不一样闭包
+d.one(); //1
+
+2.
+var obj = {};
+function a(){
+ var val = 0;
+ obj.exec = function(){
+  ++val;
+  console.log(val);
+ };
+}
+a();
+obj.exec(); //1
+obj.exec(); //2
+/*
+*变形
+*/
+var obj = {};
+function a(){
+ var val = 0;
+ obj.exec1 = function(){
+  ++val;
+  console.log(val);
+ };
+ obj.exec2 = function(){
+  ++val;
+  console.log(val);
+ };
+}
+a();
+obj.exec1(); //1
+obj.exec1(); //2
+obj.exec2(); //3
+obj.exec2(); //4
+//多个嵌套函数间共享同一个作用域链，变量共享
