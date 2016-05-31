@@ -1,0 +1,68 @@
+//javascript compatible event processer
+//e.g. html 
+<div id="box" class="box">
+	<div id="d1" class="d1">
+		<div id="d2" class="d2"></div>
+	</div>
+</div>
+
+var EventUtil = {
+	addHandler : function(obj,event,handler){
+		if(document.addEventListener){
+			obj.addEventListener(event,handler,false);
+		}else if(document.attachEvent){
+			obj.attachEvent("on"+event,handler);
+		}else{
+			obj['on'+event] = handler;
+		}
+	},
+	removeHandler : function(){
+		if(document.removeEventListener){
+			obj.removeEventListener(event,handler,false);
+		}else if(document.detachEvent){
+			obj.detachEvent("on"+event,handler);
+		}else{
+			obj["on"+event] = null;
+		}
+	},
+	getEvent : function(e){
+		return e ? e : window.e;
+	},
+	getTarget : function(e){
+		return e.target || e.srcElement;
+	},
+	preventDefault : function(e){
+		if(e.preventDefault){
+			e.preventDefault();
+		}else{
+			e.returnValue = false;
+		}
+	},
+	stopPropagation : function(e){
+		if(e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			e.cancelBubble = true;
+		}
+	}
+};
+var box = document.getElementById('box');
+EventUtil.addHandler(box,'click',function(e){
+	e = EventUtil.getEvent(e);
+	var target = EventUtil.getTarget(e);
+	switch(target.id){
+		case "box": 
+			console.log("i'm box");
+			break;
+		case "d1":
+			EventUtil.stopPropagation(e);
+			EventUtil.preventDefault(e);
+		    console.log("i'm d1");
+			break;
+		case "d2": 
+			EventUtil.stopPropagation(e);
+			EventUtil.preventDefault(e);
+			  console.log("i'm d2");
+			break;
+	}
+});
