@@ -1,4 +1,4 @@
-//javascript compatible event processer
+//compatible event processor of javascript
 //e.g. html 
 <div id="box" class="box">
 	<div id="d1" class="d1">
@@ -51,7 +51,7 @@ EventUtil.addHandler(box,'click',function(e){
 	e = EventUtil.getEvent(e);
 	var target = EventUtil.getTarget(e);
 	switch(target.id){
-		case "box": 
+	case "box": 
 			console.log("i'm box");
 			break;
 		case "d1":
