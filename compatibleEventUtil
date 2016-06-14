@@ -119,8 +119,8 @@ EventUtil.addHandler(box,'click',function(e){
   
   /*
    * 重写方法
-   * ie不兼容
-   * 1.trim
+   * ie9以下不兼容
+   * 1.trim   ie9以下为undefined
    */
    String.prototype.trim = function(){
        return this.replace(/^\s+/,'').replace(/\s+$/,'');
