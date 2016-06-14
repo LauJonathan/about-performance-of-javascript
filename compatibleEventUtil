@@ -1,68 +1,130 @@
 //compatible event processor of javascript
+//moz,webkit,ie7,8,9...
 //e.g. html 
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>compatibleEventUtil</title>
+</head>
+<body>
 <div id="box" class="box">
-	<div id="d1" class="d1">
-		<div id="d2" class="d2"></div>
-	</div>
+    <div id="d1" class="d1">
+	<div id="d2" class="d2"></div>
+    </div>
 </div>
-
+<script type="text/javascript">
 var EventUtil = {
-	addHandler : function(obj,event,handler){
-		if(obj.addEventListener){
-			obj.addEventListener(event,handler,false);
-		}else if(obj.attachEvent){
-			obj.attachEvent("on"+event,handler);
-		}else{
-			obj['on'+event] = handler;
-		}
-	},
-	removeHandler : function(obj,event,handler){
-		if(obj.removeEventListener){
-			obj.removeEventListener(event,handler,false);
-		}else if(obj.detachEvent){
-			obj.detachEvent("on"+event,handler);
-		}else{
-			obj["on"+event] = null;
-		}
-	},
-	getEvent : function(e){
-		return e ? e : window.event;
-	},
-	getTarget : function(e){
-		return e.target || e.srcElement;
-	},
-	preventDefault : function(e){
-		if(e.preventDefault){
-			e.preventDefault();
-		}else{
-			e.returnValue = false;
-		}
-	},
-	stopPropagation : function(e){
-		if(e.stopPropagation){
-			e.stopPropagation();
-		}else{
-			e.cancelBubble = true;
-		}
+    addHandler : function(obj,event,handler){
+        if(obj.addEventListener){
+	    obj.addEventListener(event,handler,false);
+	}else if(obj.attachEvent){
+            obj.attachEvent("on"+event,handler);
+	}else{
+	    obj['on'+event] = handler;
 	}
+    },
+    removeHandler : function(obj,event,handler){
+	if(obj.removeEventListener){
+	    obj.removeEventListener(event,handler,false);
+	}else if(obj.detachEvent){
+	    obj.detachEvent("on"+event,handler);
+	}else{
+	    obj["on"+event] = null;
+	}
+    },
+    getEvent : function(e){
+	return e ? e : window.event;     // window.event兼容ie9以下用的,webkit\moz不生效
+    },
+    getTarget : function(e){
+	return e.target || e.srcElement; // ie9以下获取目标对象
+    },
+    preventDefault : function(e){
+	if(e.preventDefault){
+	    e.preventDefault();
+	}else{
+	    e.returnValue = false;  // ie9以下阻止默认
+	}
+    },
+    stopPropagation : function(e){
+	if(e.stopPropagation){
+	    e.stopPropagation();
+        }else{
+	    e.cancelBubble = true; // ie9以下阻止冒泡
+        }
+    }
 };
+
+//大区域元素绑定click事件
 var box = document.getElementById('box');
 EventUtil.addHandler(box,'click',function(e){
-	e = EventUtil.getEvent(e);
-	var target = EventUtil.getTarget(e);
-	switch(target.id){
-	case "box": 
-			console.log("i'm box");
-			break;
-		case "d1":
-			EventUtil.stopPropagation(e);
-			EventUtil.preventDefault(e);
-		    console.log("i'm d1");
-			break;
-		case "d2": 
-			EventUtil.stopPropagation(e);
-			EventUtil.preventDefault(e);
-			  console.log("i'm d2");
-			break;
-	}
+    e = EventUtil.getEvent(e);
+    var target = EventUtil.getTarget(e);
+    switch(target.id){
+        case "box": 
+            console.log("i'm box");
+	    break;
+	case "d1":
+	    EventUtil.stopPropagation(e);
+	    EventUtil.preventDefault(e);
+	    console.log("i'm d1");
+	    break;
+	case "d2": 
+	    EventUtil.stopPropagation(e);
+	    EventUtil.preventDefault(e);
+	    console.log("i'm d2");
+	    break;
+	   
+	//default未使用
+    }
 });
+
+ /*
+  * khd一些禁用
+  * 1.禁止右键菜单
+  * 2.禁止F5、F12、backspace快捷键
+  * 3.禁止文字选中
+  */
+  // 1.禁止右键菜单
+  document.oncontextmenu = function(){  
+     return false;  
+  };
+ 
+ /* 
+  * 2.禁止F5、F12、backspace快捷键
+  */
+  document.onkeydown = function(e){  
+      var e = e || window.event;
+      var keyCode = e.keyCode;
+      var target = e.target || e.srcElement;
+      if(keyCode === 116 || keyCode === 123 || (keyCode === 8 && target.type !== 'text' && 
+              target.type !== 'password')){ 
+          return false; 
+      } 
+  };
+  
+ /*
+  * 3.禁止文字选中(默认只对input,textarea不适用)
+  * 谷歌,ie等通过js可行，火狐moz需要单独加样式-moz-user-select: none;
+  * user-select: none; 支持ie10+,webkit...
+  */
+  document.body.onselectstart = function(){
+      return false;
+  };
+  
+  
+  // ie9+和webkit等写法一致
+  // ie9以下事件e为undefined, e.target为undefined
+  
+  
+  /*
+   * 重写方法
+   * ie不兼容
+   * 1.trim
+   */
+   String.prototype.trim = function(){
+       return this.replace(/^\s+/,'').replace(/\s+$/,'');
+   };
+</script>
+</body>
+</html>
