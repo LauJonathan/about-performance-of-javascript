@@ -82,7 +82,7 @@ EventUtil.addHandler(box,'click',function(e){
  /*
   * khd一些禁用
   * 1.禁止右键菜单
-  * 2.禁止F5、F12、backspace快捷键
+  * 2.禁止F5、F12、backspace快捷键(backspace需要对text,password...输入框允许)
   * 3.禁止文字选中
   */
   // 1.禁止右键菜单
