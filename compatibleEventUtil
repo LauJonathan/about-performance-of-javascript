@@ -8,25 +8,25 @@
 
 var EventUtil = {
 	addHandler : function(obj,event,handler){
-		if(document.addEventListener){
+		if(obj.addEventListener){
 			obj.addEventListener(event,handler,false);
-		}else if(document.attachEvent){
+		}else if(obj.attachEvent){
 			obj.attachEvent("on"+event,handler);
 		}else{
 			obj['on'+event] = handler;
 		}
 	},
-	removeHandler : function(){
-		if(document.removeEventListener){
+	removeHandler : function(obj,event,handler){
+		if(obj.removeEventListener){
 			obj.removeEventListener(event,handler,false);
-		}else if(document.detachEvent){
+		}else if(obj.detachEvent){
 			obj.detachEvent("on"+event,handler);
 		}else{
 			obj["on"+event] = null;
 		}
 	},
 	getEvent : function(e){
-		return e ? e : window.e;
+		return e ? e : window.event;
 	},
 	getTarget : function(e){
 		return e.target || e.srcElement;
