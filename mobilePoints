@@ -1,0 +1,7 @@
+一、click事件300ms延时解决:
+  touchstart: 触碰屏幕即执行，极有意外,点击时应有一点间隔时间
+  touchend: 比较符合，但需保证不触发touchmove,比如上下滑动网页，导致触发touchend意外
+  zepto: tap有穿透问题
+  fastClick: 只为解决click，用处单一
+  hammer: 具有tap、swipe等移动类库，方便使用（个人认为这个较优）
+  
