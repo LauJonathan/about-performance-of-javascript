@@ -78,40 +78,6 @@ EventUtil.addHandler(box,'click',function(e){
 	//default未使用
     }
 });
-
- /*
-  * khd一些禁用
-  * 1.禁止右键菜单
-  * 2.禁止F5、F12、backspace快捷键(backspace需要对text,password...输入框允许)
-  * 3.禁止文字选中
-  */
-  // 1.禁止右键菜单
-  document.oncontextmenu = function(){  
-     return false;  
-  };
- 
- /* 
-  * 2.禁止F5、F12、backspace快捷键
-  */
-  document.onkeydown = function(e){  
-      var e = e || window.event;
-      var keyCode = e.keyCode;
-      var target = e.target || e.srcElement;
-      if(keyCode === 116 || keyCode === 123 || (keyCode === 8 && target.type !== 'text' && 
-              target.type !== 'password')){ 
-          return false; 
-      } 
-  };
-  
- /*
-  * 3.禁止文字选中(默认只对input,textarea不适用)
-  * 谷歌,ie等通过js可行，火狐moz需要单独加样式-moz-user-select: none;
-  * user-select: none; 支持ie10+,webkit...
-  */
-  document.body.onselectstart = function(){
-      return false;
-  };
-  
   
   // ie9+和webkit等写法一致
   // ie9以下事件e为undefined, e.target为undefined
